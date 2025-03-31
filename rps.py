@@ -1,5 +1,17 @@
+import pygame
 import streamlit as st
 from module import get_computer_choice, determine_winner
+
+# Initialize pygame mixer for sound
+pygame.mixer.init()
+
+# Load sound files
+win_sound = pygame.mixer.Sound("win_sound.mp3")
+lose_sound = pygame.mixer.Sound("lose_sound.mp3")
+tie_sound = pygame.mixer.Sound("tie_sound.mp3")  
+win_sound.set_volume(0.1)
+lose_sound.set_volume(0.1)
+
 
 st.title("Rock, Paper, Scissors")
 
@@ -9,6 +21,7 @@ if "wins" not in st.session_state:
     st.session_state.losses = 0
     st.session_state.ties = 0
 
+# Dictionary to store image paths for each choice
 image_dict = {
     "rock": "rock.jpg",
     "paper": "paper.png",
@@ -21,19 +34,20 @@ if st.button("Play"):
     computer_choice = get_computer_choice()
     result = determine_winner(user_choice, computer_choice)
 
-    # Update score
     if result == "You win!":
         st.session_state.wins += 1
+        win_sound.play()  
     elif result == "Computer wins!":
         st.session_state.losses += 1
+        lose_sound.play()  
     else:
         st.session_state.ties += 1
+        tie_sound.play()  
 
-    # Show user's choice image
     st.write("You chose:")
     st.image(image_dict[user_choice], width=150)
 
-    # Show computer's choice image
+    
     st.write("Computer chose:")
     st.image(image_dict[computer_choice], width=150)
 
