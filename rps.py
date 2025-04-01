@@ -21,7 +21,6 @@ if "wins" not in st.session_state:
     st.session_state.losses = 0
     st.session_state.ties = 0
 
-# Dictionary to store image paths for each choice
 image_dict = {
     "rock": "rock.jpg",
     "paper": "paper.png",
